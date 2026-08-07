@@ -1,0 +1,19 @@
+# Copiar a terraform.tfvars (que esta ignorado por git) y completar.
+
+# Password del administrador del cluster de Mongo.
+#
+# OJO: este valor SE ESCRIBE en el cluster en cada apply (Azure nunca devuelve el
+# password, asi que Terraform no puede compararlo). Si no es el actual, lo rota y
+# hay que actualizar 'mongodburi' en el .env de la API.
+#
+# Azure exige: 8-256 caracteres y al menos 3 de estos 4 tipos -> minusculas,
+# mayusculas, numeros, simbolos. "CAMBIAME" NO cumple (solo mayusculas).
+mongo_admin_password = "Ejemplo.Cambiar123"
+
+# Recomendado: restringir SSH a tu IP en vez de dejarlo abierto a internet.
+# ssh_source_address_prefix = "190.158.28.179"
+
+# tags = {
+#   proyecto = "franchise-api"
+#   entorno  = "dev"
+# }

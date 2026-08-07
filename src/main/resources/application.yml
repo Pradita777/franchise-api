@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: franchise-api
+  mongodb:
+    uri: ${env.mongodburi}
+    database: franchises_db
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+    doc-expansion: list
+    display-request-duration: true

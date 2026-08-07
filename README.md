@@ -4,6 +4,20 @@ API REST reactiva para la gestión de franquicias, sus sucursales y los producto
 
 Desarrollada como prueba técnica de Desarrollador Back-end.
 
+## Despliegue en vivo
+
+| Recurso | Enlace |
+|---|---|
+| 🌐 API desplegada (Azure) | `http://20.80.100.76/api/v1/franchises` |
+| 📚 Swagger UI | <http://20.80.100.76/swagger-ui/index.html> |
+| 📄 OpenAPI (JSON) | `http://20.80.100.76/v3/api-docs` |
+| 🐳 Imagen Docker | <https://hub.docker.com/r/pradita777/franchise-api> |
+
+```bash
+# Probar la API desplegada
+curl http://20.80.100.76/api/v1/franchises
+```
+
 ## Stack tecnológico
 
 | Tecnología | Uso |
@@ -14,6 +28,10 @@ Desarrollada como prueba técnica de Desarrollador Back-end.
 | Azure Cosmos DB for MongoDB (vCore) | Base de datos en la nube |
 | Maven | Gestión de dependencias |
 | Lombok | Reducción de boilerplate |
+| springdoc-openapi | Documentación Swagger / OpenAPI |
+| JUnit 5 + Mockito + Reactor Test | Pruebas unitarias |
+| Docker | Empaquetado y despliegue |
+| Azure (VM Linux + Cosmos DB vCore) | Infraestructura en la nube |
 
 ## Modelo de datos
 
@@ -69,7 +87,16 @@ Ejemplo de documento en la colección `franchises`:
 | PATCH | `/api/v1/franchises/{franchiseId}/branches/{branchName}/name` | Actualizar nombre de la sucursal (plus) |
 | PATCH | `/api/v1/franchises/{franchiseId}/branches/{branchName}/products/{productName}/name` | Actualizar nombre del producto (plus) |
 
-> La documentación interactiva (Swagger UI) estará disponible en `/swagger-ui.html` al ejecutar la aplicación.
+## Documentación Swagger / OpenAPI
+
+Toda la API está documentada con **springdoc-openapi**: cada endpoint incluye resumen, descripción, parámetros, esquemas de request/response y códigos de estado (`200/201`, `400`, `404`).
+
+| Entorno | Swagger UI | OpenAPI JSON |
+|---|---|---|
+| ☁️ Azure | <http://20.80.100.76/swagger-ui/index.html> | `http://20.80.100.76/v3/api-docs` |
+| 💻 Local | `http://localhost:8080/swagger-ui.html` | `http://localhost:8080/v3/api-docs` |
+
+Desde Swagger UI se puede probar cada endpoint con **Try it out**. Flujo sugerido: crear franquicia (`POST /api/v1/franchises`) → copiar el `id` devuelto → agregar sucursal → agregar productos → consultar `GET /{franchiseId}/top-stock-products`.
 
 ## Ejecución en entorno local
 
@@ -103,6 +130,36 @@ cd franchise-api
 ```
 
 La API queda disponible en `http://localhost:8080`.
+
+### Alternativa con Docker
+
+```powershell
+docker run -d --name franchise-api -p 8080:8080 -e mongodburi="<cadena-de-conexion>" pradita777/franchise-api:1.0
+```
+
+> Guía completa de despliegue (local y Azure) en [DEPLOYMENT.md](DEPLOYMENT.md).
+
+## Pruebas unitarias
+
+La capa de servicio (`FranchiseServiceImpl`) está cubierta con pruebas unitarias usando **JUnit 5**, **Mockito** (repositorio mockeado) y **StepVerifier** de Reactor Test para verificar los flujos reactivos: casos de éxito, entidades no encontradas (franquicia/sucursal/producto) y verificación de que no se persiste cuando no corresponde.
+
+```powershell
+cd franchise-api
+.\mvnw.cmd test               # Windows
+./mvnw test                   # Linux / macOS
+```
+
+## Imagen Docker
+
+Imagen publicada en Docker Hub: [`pradita777/franchise-api:1.0`](https://hub.docker.com/r/pradita777/franchise-api)
+
+- Build **multi-stage** (JDK 21 para compilar, JRE 21 para ejecutar → imagen final liviana).
+- Se ejecuta con **usuario no root** (`spring`).
+- La cadena de conexión se inyecta por variable de entorno: la imagen no contiene credenciales.
+
+```bash
+docker pull pradita777/franchise-api:1.0
+```
 
 ## Convenciones de código
 
