@@ -113,12 +113,12 @@ La cadena de conexión se inyecta por variable de entorno para no exponer creden
 
 ```powershell
 # Windows (PowerShell)
-$env:MONGODB_URI = "mongodb://<user>:<password>@<host>:<port>/franchises_db?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false"
+$env:mongodburi = "mongodb://<user>:<password>@<host>:<port>/franchises_db?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false"
 ```
 
 ```bash
 # Linux / macOS
-export MONGODB_URI="mongodb://<user>:<password>@<host>:<port>/franchises_db?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false"
+export mongodburi="mongodb://<user>:<password>@<host>:<port>/franchises_db?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false"
 ```
 
 ### Arranque
@@ -184,13 +184,13 @@ src/main/java/com/accenture/franchiseapi/
 ## Roadmap
 
 - [x] Inicialización del proyecto y conexión a Azure Cosmos DB
-- [ ] Modelo de dominio y capa de persistencia
-- [ ] Endpoints CRUD (criterios 2-6)
-- [ ] Endpoint de producto con mayor stock por sucursal (criterio 7)
-- [ ] Endpoints plus de actualización de nombres
-- [ ] Documentación con Swagger / OpenAPI
-- [ ] Empaquetado con Docker (plus)
-- [ ] Despliegue completo en Azure (plus)
+- [x] Modelo de dominio y capa de persistencia
+- [x] Endpoints CRUD (criterios 2-6)
+- [x] Endpoint de producto con mayor stock por sucursal (criterio 7)
+- [x] Endpoints plus de actualización de nombres
+- [x] Documentación con Swagger / OpenAPI
+- [x] Empaquetado con Docker (plus)
+- [x] Despliegue completo en Azure (plus)
 
 ## Autor
 
